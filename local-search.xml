@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  
+  
+  
+  <entry>
+    <title>Proxmark3的笔记</title>
+    <link href="/Proxmark3%E7%9A%84%E7%AC%94%E8%AE%B0/"/>
+    <url>/Proxmark3%E7%9A%84%E7%AC%94%E8%AE%B0/</url>
+    
+    <content type="html"><![CDATA[<h1 id="判断卡类型"><a href="#判断卡类型" class="headerlink" title="判断卡类型"></a>判断卡类型</h1><p>其中需要看的一个参数就是SAK，看SAK的数值是什么，如果是08那就证明你的卡是IC-M1卡，只有IC-M1卡才支持解码复制或者模拟到手机手环；如果是18&#x2F;20&#x2F;28这些数值，他们分别是4K卡&#x2F;CPU卡&#x2F;模拟CPU卡，或者是其他数值都是不行的！</p><h1 id="PM3-proxmark3-简单文字教程"><a href="#PM3-proxmark3-简单文字教程" class="headerlink" title="PM3(proxmark3)简单文字教程"></a>PM3(proxmark3)简单文字教程</h1><ul><li>卡片分为ID,IC 一般使用IC安全性高。ID卡直接复制ID就可以使用，属于低频卡</li><li>软件只是方便傻瓜操作，命令也可以完成这些任务。</li><li>IC卡有漏洞的直接破解，现在出了3代无漏洞，需要侦测破解。</li><li>hard卡（一种防破解的漏洞卡）使用hardnested攻击也可以很快找到密码。</li><li>全加密没有弱口令的卡需要探测解密。</li><li>扇区有密码保护，不能够读写，破解是通过漏洞找到密码，或者侦测找到密码。</li><li>漏洞卡使用PRNG破技术解，即知一求全，未加密的卡直接扫描默认密码也可以读写。</li><li>写CUID&#x2F;FUID需要使用 目标数据 和 该卡现在的密码，因此二次写入需要知道之前的密码。请备份好破解出来的密码，备份分为密钥和数据。</li><li>找到一个扇区的密码可以使用知一求全。然后读取这个卡片。</li><li>探测有2种，一种是pm3有卡探测，相当于监听通讯。一种是变色龙无卡探测，需要模拟一个卡号，因为有可能是一卡一密码。</li><li>变色龙，读取卡后选择保存数据，这个数据是有密码在里面的。需要连接变色龙的接口修改卡号，有APP和PC软件。</li><li>pm3有卡嗅探很麻烦，需要双头USB，用电脑输入命令后拔掉USB线，保持USB线充电pm3数据不丢失，再去嗅探数据</li><li>hf 14a snoop 嗅探数据</li><li>hf list 14a  查看监听数据</li></ul><p>修复IC-BCC0卡片</p><p>0扇区0块 写入非法数据导致卡片失效，</p><p>View current anti-collision configuration</p><p>hf 14a config</p><p>Disable BCC0 checking</p><p>hf 14a config –bcc ignore</p><p>Try to read card data</p><p>hf 14a info</p><p>If above command works, read S0 contents</p><p>hf mf rdsc -s -k &lt;key|12Hex&gt;</p><p>Write good B0 to fix BCC0 issue</p><p>hf mf wrbl –blk 0 -k &lt;key|12Hex&gt; -d &lt;data|16hex&gt;&#96;</p><p>Example data&#x2F;good B0: 010203040408040000004A495256494E</p><p>Reset anti-collision to defaults</p><p>hf 14a config –bcc st</p><p>来自  <a href="https://forum.dangerousthings.com/t/ok-so-im-having-trouble/11759/47?page=3">https://forum.dangerousthings.com/t/ok-so-im-having-trouble/11759/47?page=3</a></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>技术分享</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>为PIXEL开启高清语音通话VoLTE</title>
+    <link href="/%E4%B8%BAPIXEL%E5%BC%80%E5%90%AF%E9%AB%98%E6%B8%85%E8%AF%AD%E9%9F%B3%E9%80%9A%E8%AF%9DVoLTE/"/>
+    <url>/%E4%B8%BAPIXEL%E5%BC%80%E5%90%AF%E9%AB%98%E6%B8%85%E8%AF%AD%E9%9F%B3%E9%80%9A%E8%AF%9DVoLTE/</url>
+    
+    <content type="html"><![CDATA[<h1 id="第一种方法"><a href="#第一种方法" class="headerlink" title="第一种方法"></a>第一种方法</h1><p><a href="https://github.com/RikkaApps/Shizuku/releases">https://github.com/RikkaApps/Shizuku/releases</a></p><p><a href="https://github.com/kyujin-cho/pixel-volte-patch">https://github.com/kyujin-cho/pixel-volte-patch</a></p><p>下载以上文件安装，在pixel VoLTE patch中开启。</p><p>第二种方法 直接magisk刷入。</p><p>Pixel 6 &#x2F; Pixel 7</p><p><a href="https://www.getdroidtips.com/vowifi-volte-pixel-6-pro/">https://www.getdroidtips.com/vowifi-volte-pixel-6-pro/</a></p><p>Pixel5 的解决方案</p><p><a href="https://forum.xda-developers.com/t/mod-magiskmodule-volte-vowifi-5g-in-unsupported-countries-pixel-4a-5g-5-5a.4547909/">https://forum.xda-developers.com/t/mod-magiskmodule-volte-vowifi-5g-in-unsupported-countries-pixel-4a-5g-5-5a.4547909/</a></p><p><a href="https://github.com/stanislawrogasik/Pixel5-VoLTE-VoWiFi/releases/tag/latest">https://github.com/stanislawrogasik/Pixel5-VoLTE-VoWiFi/releases/tag/latest</a></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>技术分享</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>一款好玩的PC游戏 Kalimaba</title>
+    <link href="/%E4%B8%80%E6%AC%BE%E5%A5%BD%E7%8E%A9%E7%9A%84PC%E6%B8%B8%E6%88%8F%20Kalimaba/"/>
+    <url>/%E4%B8%80%E6%AC%BE%E5%A5%BD%E7%8E%A9%E7%9A%84PC%E6%B8%B8%E6%88%8F%20Kalimaba/</url>
+    
+    <content type="html"><![CDATA[<p>没事儿玩玩游戏可以活跃大脑！哦对了，没有资源，需要搜索关键字自己找</p><p><img src="/./attachments/20240323-4.png"></p><p><img src="/./attachments/20240323-3.png"></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>游戏</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>一款好玩的空战游戏</title>
+    <link href="/%E4%B8%80%E6%AC%BE%E5%A5%BD%E7%8E%A9%E7%9A%84%E7%A9%BA%E6%88%98%E6%B8%B8%E6%88%8F/"/>
+    <url>/%E4%B8%80%E6%AC%BE%E5%A5%BD%E7%8E%A9%E7%9A%84%E7%A9%BA%E6%88%98%E6%B8%B8%E6%88%8F/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Project-Wingman"><a href="#Project-Wingman" class="headerlink" title="Project Wingman"></a>Project Wingman</h1><p>纯粹是为了空战而设计的游戏，战机狗斗化<br><img src="/./attachments/20240323-1.png"></p><p><img src="/./attachments/20240323-2.png"></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>游戏</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>一句话总结WOOP思维</title>
+    <link href="/%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%80%BB%E7%BB%93WOOP%E6%80%9D%E7%BB%B4/"/>
+    <url>/%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%80%BB%E7%BB%93WOOP%E6%80%9D%E7%BB%B4/</url>
+    
+    <content type="html"><![CDATA[<p>WOOP思维最有创意的是，它从梦想出发，最后归于行动。</p><p>它清晰的认识到行动达成结果，又不忘记面对困难。还充分运用了想象力</p><p>如果能够清晰熟练的使用WOOP思维，将能成就很多事情。</p><h1 id="WOOP"><a href="#WOOP" class="headerlink" title="WOOP"></a>WOOP</h1><table><thead><tr><th></th><th></th></tr></thead><tbody><tr><td>梦想</td><td>牵挂已久的愿望,放在思考的中心,专注注意力在其身上</td></tr><tr><td>结果</td><td>想象完成的画面,形象生动,无所顾虑</td></tr><tr><td>障碍</td><td>障碍里最关键的想法和行动是什么?</td></tr><tr><td>计划</td><td>If then 计划,最有效的想法或者行动,如果X出现,我就Y,针对障碍的,把计划重复给自己听</td></tr></tbody></table><p>每一个清晰表达有助于知道如何行动.</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>GTA音乐全集</title>
+    <link href="/GTA%E9%9F%B3%E4%B9%90%E5%85%A8%E9%9B%86/"/>
+    <url>/GTA%E9%9F%B3%E4%B9%90%E5%85%A8%E9%9B%86/</url>
+    
+    <content type="html"><![CDATA[<p>玩过GTA的小伙伴应该很清楚游戏中有很多好听的音乐，搜索关键字可以找到音乐包。<br><img src="/./attachments/GTA%E9%9F%B3%E4%B9%90%E5%85%A8%E9%9B%86_image_1.png"><br>youtube上也有音乐频道</p><p><a href="https://www.youtube.com/@GTASoundtracks/playlists">https://www.youtube.com/@GTASoundtracks/playlists</a></p><p>搜索 GTA: San Andreas</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>资源分享</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>使用Obsidian管理Hexo博客的要点</title>
+    <link href="/%E4%BD%BF%E7%94%A8Obsidian%E7%AE%A1%E7%90%86Hexo%E5%8D%9A%E5%AE%A2%E7%9A%84%E8%A6%81%E7%82%B9/"/>
+    <url>/%E4%BD%BF%E7%94%A8Obsidian%E7%AE%A1%E7%90%86Hexo%E5%8D%9A%E5%AE%A2%E7%9A%84%E8%A6%81%E7%82%B9/</url>
+    
+    <content type="html"><![CDATA[<p>尽量使用一个文件夹，这样管理起来方便，如果想要分类，使用tag或者categories</p><p>图片使用<code>![[attachments/11.jpg]]</code></p><p><img src="/./attachments/11.jpg"></p><p><img src="/./attachments/22.jpg"></p><p>例如 文件使用 <code>[[attachments/rarreg.key]]</code></p><p><a href="./attachments/rarreg.key">FileLink</a></p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  
+</search>
